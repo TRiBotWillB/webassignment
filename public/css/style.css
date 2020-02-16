@@ -1,0 +1,55 @@
+html, body {
+    background-color: #24252f;
+    color: white;
+}
+
+.register-form {
+    background-color: #1d1f27;
+    border: 1px solid #00adb5;
+
+    padding: 25px;
+}
+
+.title-large {
+    font-family: 'Bebas Neue', cursive;
+    font-size: 3em;
+}
+
+.title-medium {
+    font-family: 'Bebas Neue', cursive;
+    font-size: 2em;
+}
+
+.title-small {
+    font-family: 'Bebas Neue', cursive;
+    font-size: 1.5em;
+}
+
+
+input {
+    border-radius: 0px !important;
+    background-color: #111318 !important;
+    border-color: #111318 !important;
+    border-style: solid !important;
+    color: white !important;
+}
+
+.btn-blue {
+    color: black !important;
+    background-color:  #00adb5 !important;
+    border-color:  #00adb5 !important;
+    font-weight: bold;
+    letter-spacing: 0.05em;
+    border-radius: 0 !important;
+}
+
+
+.btn-blue:hover,
+.btn-blue:active,
+.btn-blue:focus,
+.btn-blue.active {
+    /* let's darken #004E64 a bit for hover effect */
+    background: #008991 !important;
+    color: black;
+    border-color: #008991 !important;
+}
