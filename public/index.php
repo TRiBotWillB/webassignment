@@ -9,4 +9,5 @@ spl_autoload_register(function ($class_name) {
         require_once '../app/controllers/' . $class_name . '.php';
     }
 });
+
 require_once('../app/init.php');
