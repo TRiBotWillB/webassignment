@@ -29,13 +29,13 @@
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
+                <li class="nav-item">
                     <a class="nav-link" href="/">Home</a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item ">
                     <a class="nav-link" href="/home/images">Image Search</a>
                 </li>
-                <li class="nav-item ">
+                <li class="nav-item active ">
                     <a class="nav-link" href="/users/upload">Upload</a>
                 </li>
             </ul>
@@ -61,14 +61,56 @@
         </div>
     </nav>
 
-
     <div class="row justify-content-center">
-        <div class="col-12 col-md-6">
-            <h1 class="title-large mt-5 text-center"> What is IMGER?</h1>
+        <div class="col-12 col-md-8 mt-5">
 
-            <p>Imger is an image upload site that allows you to tag your images. This makes it much easier for you when
-                searching though your photos. In the future Imger, will be able to automatically suggest tags based on the
-                images content.</p>
+            <h1 class="text-center mb-2 title-large">Upload Your Images!</h1>
+
+            <form class="register-form mt-5" method="POST">
+                <h4 class="form-title title-medium text-center">Upload Image</h4>
+
+                <?php
+                if (isset($data['errors'])) {
+                    foreach ($data['errors'] as $error) {
+                        ?>
+
+                        <div class="alert alert-danger alert-dismissable">
+                            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                            <?= $error ?>
+                        </div>
+
+                        <?php
+                    }
+                }
+
+                if (!isset($data['username'])) {
+                ?>
+                    <div class="alert alert-danger alert-dismissable">
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                        Please Login to upload images
+                    </div>
+                <?php
+                }
+                ?>
+
+                <div class="form-group">
+                    <label for="imageFile">Choose your image:</label>
+                    <input type="file" class="form-control-file" id="imageFile">
+                </div>
+
+                <div class="form-group">
+                    <label for="imageDescription">Add a description:</label>
+                    <textarea class="form-control" id="imageDescription" rows="3"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="imageDescription">Add your tags, separated by commas ( , ):</label>
+                    <input type="text" class="form-control" id="imageTags" placeholder="Venince,2020">
+                </div>
+
+
+                <button type="submit" class="btn btn-blue btn-block">Upload!</button>
+            </form>
         </div>
     </div>
 </div>
