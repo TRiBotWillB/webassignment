@@ -29,10 +29,10 @@
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
+                <li class="nav-item">
                     <a class="nav-link" href="/">Home</a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item active">
                     <a class="nav-link" href="/home/images">Image Search</a>
                 </li>
                 <li class="nav-item ">
@@ -61,14 +61,11 @@
         </div>
     </nav>
 
-
     <div class="row justify-content-center">
         <div class="col-12 col-md-6">
-            <h1 class="title-large mt-5 text-center"> What is IMGER?</h1>
+            <h1 class="title-large mt-5 text-center"> Search for Images</h1>
 
-            <p>Imger is an image upload site that allows you to tag your images. This makes it much easier for you when
-                searching though your photos. In the future Imger, will be able to automatically suggest tags based on the
-                images content.</p>
+
         </div>
     </div>
 </div>

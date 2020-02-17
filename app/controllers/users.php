@@ -15,7 +15,44 @@ class users extends BaseController
 
     }
 
-    public function logout() {
+    public function upload()
+    {
+        session_start();
+
+        $data = array();
+
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
+            // Attempt to upload the image, POST data will be taken within the user model
+            $errors = $this->user->upload();
+
+            if (sizeof($errors) > 0) {
+                // Since there are errors, render the page showing those errors
+
+                $this->view('users/upload', $errors);;
+            } else {
+
+                // Image must be uploaded, send message back saying upload successful
+                $this->view('users/upload', [
+                    'uploaded' => true
+                ]);
+            }
+        }
+
+        if (isset($_SESSION["username"])) {
+            $data["username"] = $_SESSION["username"];
+
+
+            $this->view('users/upload', $data);
+        } else {
+
+            $this->view('users/upload', $data);
+        }
+
+    }
+
+    public function logout()
+    {
         session_start();
 
         // Unset all sessions variables

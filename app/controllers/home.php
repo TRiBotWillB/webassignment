@@ -16,4 +16,17 @@ class home extends BaseController
 
     }
 
+    public function images()
+    {
+        session_start();
+
+        $data = array();
+
+        if(isset($_SESSION["username"])) {
+            $data["username"] = $_SESSION["username"];
+        }
+        $this->view('home/images', $data);
+
+    }
+
 }
