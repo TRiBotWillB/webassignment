@@ -25,7 +25,7 @@ class User
 
         // Check if the password is incorrect, if so add to errors
         // Session should be setup if no errors return
-        if(!$this->validatePassword($this->username, $this->password1)) {
+        if (!$this->validatePassword($this->username, $this->password1)) {
             $errors[] = "Username or password incorrect";
             $errors[] = "Username: $this->username, password: $this->password1";
         }
@@ -111,7 +111,8 @@ class User
 
     }
 
-    function validatePassword($user, $pass) {
+    function validatePassword($user, $pass)
+    {
         require '../app/bin/config.php';
 
         $sql = "SELECT id,  username, password FROM USERS where username = ?";
@@ -125,13 +126,13 @@ class User
 
             $id = "";
             $usern = "";
-            $hashedPassword ="";
+            $hashedPassword = "";
 
             if ($stmt->num_rows > 0) {
                 $stmt->bind_result($id, $usern, $hashedPassword);
                 $stmt->fetch();
 
-                if(password_verify($pass, $hashedPassword)) {
+                if (password_verify($pass, $hashedPassword)) {
                     session_start();
 
                     $_SESSION["loggedin"] = true;
@@ -152,6 +153,50 @@ class User
                 return false;
             }
         }
+    }
+
+    function upload()
+    {
+        require '../app/bin/config.php';
+
+        $errors = array();
+
+        if (isset($_FILES["imageFile"]["name"])) {
+
+            $image = $_FILES["imageFile"]["name"];
+
+            $description = isset($_POST['imageDescription']) ? $_POST["imageDescription"] : "EMPTY";
+
+            //Tags need to have white space removed, separate by comma
+            $tags = isset($_POST['imageTags']) ? $_POST["imageTags"] : "EMPTY";
+
+
+            $sql = "INSERT INTO images (imgName, description) VALUES (?, ?)";
+
+            if ($stmt = $conn->prepare($sql)) {
+                $stmt->bind_param("ss", $image, $description);
+                $stmt->execute();
+
+                $stmt->store_result();
+
+                $id = $conn->insert_id;
+
+                $target = $_SERVER['DOCUMENT_ROOT'] . '/public/uploads/'. $id;
+
+                if(!is_dir($target)) {
+                    mkdir($target, true);
+                }
+
+                move_uploaded_file($_FILES["imageFile"]["tmp_name"], $target . '/'. basename($image));
+
+
+            }
+
+            // Seperate and save tags are adding image to DB, since we need to set the image ID
+
+        }
+
+        return $errors;
     }
 
 }

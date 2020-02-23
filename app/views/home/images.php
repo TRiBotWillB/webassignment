@@ -62,10 +62,21 @@
     </nav>
 
     <div class="row justify-content-center">
-        <div class="col-12 col-md-6">
-            <h1 class="title-large mt-5 text-center"> Search for Images</h1>
+        <div class="col-12 text-center justify-content-center">
+            <h1 class="title-large mt-5"> Search for Images</h1>
 
+            <form class="form-inline text-center justify-content-center mt-5" method="post">
+                <label class="sr-only" for="searchText">Search Query</label>
+                <input type="text" class="form-control mb-2 mr-sm-2" id="searchText" name="searchText" placeholder="Description...">
 
+                <label class="sr-only" for="searchType">Search Query</label>
+                <select class="custom-select my-1 mr-sm-2" id="searchType"name="searchType">
+                    <option selected>Description</option>
+                    <option value="1">Tags</option>
+                </select>
+
+                <button type="submit" class="btn btn-primary mb-2">Search</button>
+            </form>
         </div>
     </div>
 </div>
