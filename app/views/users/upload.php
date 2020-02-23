@@ -66,7 +66,7 @@
 
             <h1 class="text-center mb-2 title-large">Upload Your Images!</h1>
 
-            <form class="register-form mt-5" method="POST">
+            <form class="register-form mt-5" method="POST" enctype="multipart/form-data">
                 <h4 class="form-title title-medium text-center">Upload Image</h4>
 
                 <?php
@@ -83,6 +83,17 @@
                     }
                 }
 
+                if(isset($data['uploaded'])) {
+                    ?>
+
+                    <div class="alert alert-success alert-dismissable">
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                        Uploaded!
+                    </div>
+
+                    <?php
+                }
+
                 if (!isset($data['username'])) {
                 ?>
                     <div class="alert alert-danger alert-dismissable">
@@ -95,17 +106,17 @@
 
                 <div class="form-group">
                     <label for="imageFile">Choose your image:</label>
-                    <input type="file" class="form-control-file" id="imageFile">
+                    <input type="file" class="form-control-file" name="imageFile" id="imageFile">
                 </div>
 
                 <div class="form-group">
                     <label for="imageDescription">Add a description:</label>
-                    <textarea class="form-control" id="imageDescription" rows="3"></textarea>
+                    <textarea class="form-control" id="imageDescription" name="imageDescription" rows="3"></textarea>
                 </div>
 
                 <div class="form-group">
                     <label for="imageDescription">Add your tags, separated by commas ( , ):</label>
-                    <input type="text" class="form-control" id="imageTags" placeholder="Venince,2020">
+                    <input type="text" class="form-control" id="imageTags" name="imageTags" placeholder="Venince,2020">
                 </div>
 
 

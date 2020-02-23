@@ -21,33 +21,32 @@ class users extends BaseController
 
         $data = array();
 
+        if (isset($_SESSION["username"])) {
+            $data["username"] = $_SESSION["username"];
+        }
+
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-            // Attempt to upload the image, POST data will be taken within the user model
-            $errors = $this->user->upload();
+            // Make sure user is logged in
+            if (isset($_SESSION["username"])) {
 
-            if (sizeof($errors) > 0) {
-                // Since there are errors, render the page showing those errors
+                // Attempt to upload the image, POST data will be taken within the user model
+                $errors = $this->user->upload();
 
-                $this->view('users/upload', $errors);;
-            } else {
+                if (sizeof($errors) > 0) {
+                    // Since there are errors, render the page showing those errors
 
-                // Image must be uploaded, send message back saying upload successful
-                $this->view('users/upload', [
-                    'uploaded' => true
-                ]);
+                    $data['errors'] = $errors;
+                } else {
+
+                    // Image must be uploaded, send message back saying upload successful
+                    $data['uploaded'] = true;
+
+                }
             }
         }
 
-        if (isset($_SESSION["username"])) {
-            $data["username"] = $_SESSION["username"];
-
-
-            $this->view('users/upload', $data);
-        } else {
-
-            $this->view('users/upload', $data);
-        }
+        $this->view('users/upload', $data);
 
     }
 
