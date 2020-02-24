@@ -4,10 +4,12 @@ class home extends BaseController
 {
 
     protected $image;
+    protected $logger;
 
     public function __construct()
     {
         $this->image = $this->model('Image');
+        $this->logger = $this->model('Logger');
     }
 
     public function index()
@@ -16,7 +18,7 @@ class home extends BaseController
 
         $data = array();
 
-        if(isset($_SESSION["username"])) {
+        if (isset($_SESSION["username"])) {
             $data["username"] = $_SESSION["username"];
         }
         $this->view('home/index', $data);
@@ -29,7 +31,7 @@ class home extends BaseController
 
         $data = array();
 
-        if(isset($_SESSION["username"])) {
+        if (isset($_SESSION["username"])) {
             $data["username"] = $_SESSION["username"];
         }
 
@@ -38,6 +40,13 @@ class home extends BaseController
 
             // Default Search type as Description if not set
             $this->image->searchType = isset($_POST["searchType"]) ? $_POST["searchType"] : "Description";
+
+            $logData = "User searched for images using "
+                . $this->image->searchType
+                . ', Search Text: '
+                . $this->image->searchText;
+
+            $this->logger->log("SEARCH", $logData);
 
             // Store the seach data and/or errors
             $returnedData = $this->image->search();
@@ -55,11 +64,12 @@ class home extends BaseController
 
     }
 
-    public function viewImage() {
+    public function viewImage()
+    {
         session_start();
         $data = array();
 
-        if(isset($_SESSION['username'])) {
+        if (isset($_SESSION['username'])) {
             $data["username"] = $_SESSION["username"];
         }
 
@@ -79,6 +89,21 @@ class home extends BaseController
 
             exit();
         }
+    }
+
+    public function logs()
+    {
+
+        session_start();
+        $data = array();
+
+        if (isset($_SESSION['username'])) {
+            $data["username"] = $_SESSION["username"];
+        }
+
+        $data['logs'] = $this->logger->getLogs();
+
+        $this->view('home/logs', $data);
     }
 
 }

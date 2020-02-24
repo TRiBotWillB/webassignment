@@ -25,6 +25,7 @@ class Image
 
     public function search($id = "")
     {
+
         $data = array();
 
         switch ($this->searchType) {

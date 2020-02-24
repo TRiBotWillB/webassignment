@@ -5,11 +5,14 @@ class users extends BaseController
 {
     protected $user;
     protected $image;
+    protected $logger;
+
 
     public function __construct()
     {
         $this->user = $this->model('User');
         $this->image = $this->model('Image');
+        $this->logger = $this->model('Logger');
     }
 
     public function index()
@@ -159,6 +162,8 @@ class users extends BaseController
             $errors = $this->user->login();
 
             if (sizeof($errors) > 0) {
+                $this->logger->log("LOGIN", "USER FAILED TO LOGIN");
+
                 $this->view('users/login', [
                     'errors' => $errors
                 ]);

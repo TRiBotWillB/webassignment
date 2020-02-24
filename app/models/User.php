@@ -27,7 +27,6 @@ class User
         // Session should be setup if no errors return
         if (!$this->validatePassword($this->username, $this->password1)) {
             $errors[] = "Username or password incorrect";
-            $errors[] = "Username: $this->username, password: $this->password1";
         }
 
         return $errors;
