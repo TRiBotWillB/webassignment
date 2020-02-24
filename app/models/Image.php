@@ -48,7 +48,7 @@ class Image
 
         $rows = array();
 
-        if($id == "") {
+        if ($id == "") {
             $sql = "SELECT I.*, group_concat(T.tag) FROM images I INNER JOIN tags T ON I.id = T.imageId WHERE I.description LIKE ? GROUP BY I.id";
         } else {
             $sql = "SELECT I.*, group_concat(T.tag) FROM images I INNER JOIN tags T ON I.id = T.imageId WHERE I.description LIKE ? AND I.userId = ? GROUP BY I.id";
@@ -59,7 +59,7 @@ class Image
 
         if ($stmt = $conn->prepare($sql)) {
 
-            if($id == "") {
+            if ($id == "") {
                 $stmt->bind_param("s", $searchDesc);
             } else {
                 $stmt->bind_param("si", $searchDesc, $id);
@@ -236,6 +236,28 @@ class Image
     }
 
     public function findImageById($imgId)
+    {
+        require '../app/bin/config.php';
+
+        $imageData = "";
+
+        $sql = "SELECT I.*, group_concat(T.tag) FROM images I INNER JOIN tags T ON I.id = T.imageId WHERE I.id = ? GROUP BY I.id";
+
+        if ($stmt = $conn->prepare($sql)) {
+
+            $stmt->bind_param("i", $imgId);
+            $stmt->execute();
+
+            $result = $stmt->get_result();
+
+            $imageData = $result->fetch_assoc();
+
+        }
+
+        return $imageData;
+    }
+
+    public function findUserImageById($imgId)
     {
         require '../app/bin/config.php';
 

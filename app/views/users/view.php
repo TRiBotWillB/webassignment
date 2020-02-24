@@ -32,10 +32,10 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/">Home</a>
                 </li>
-                <li class="nav-item ">
+                <li class="nav-item active">
                     <a class="nav-link" href="/home/images">Image Search</a>
                 </li>
-                <li class="nav-item active ">
+                <li class="nav-item ">
                     <a class="nav-link" href="/users/upload">Upload</a>
                 </li>
             </ul>
@@ -66,14 +66,14 @@
     <div class="row justify-content-center">
         <div class="col-12 col-md-8 mt-5">
 
-            <h1 class="text-center mb-2 title-large">Edit Your Image!</h1>
+            <h1 class="text-center mb-2 title-large">View Image!</h1>
 
-            <form class="register-form mt-5" method="POST" enctype="multipart/form-data">
+            <form class="register-form mt-5 mb-5" method="POST" enctype="multipart/form-data">
                 <h4 class="form-title title-medium text-center">Edit Image</h4>
 
                 <?php
 
-                if(isset($data['updated'])) {
+                if (isset($data['updated'])) {
                     ?>
 
                     <div class="alert alert-success alert-dismissable">
@@ -100,27 +100,35 @@
                 if (isset($data['image'])) {
                     ?>
 
-                    <h1 class="title-small mb-3"><?= $data['image']['imgName']?></h1>
+                    <div class="col-8">
 
-                    <input name="imgId" value="<?= $data['image']['id']?>" hidden>
+                        <h1 class="title-small mb-3"><?= $data['image']['imgName'] ?></h1>
 
-                    <div class="form-group">
-                        <label for="imageDescription">Edit Description:</label>
-                        <textarea class="form-control" id="imageDescription" name="imageDescription"
-                                  rows="3"><?= $data['image']['description']?></textarea>
+                        <img src="/public/uploads/<?= $data['image']['id'] ?>/<?= $data['image']['imgName'] ?>"
+                             alt="<?= $data['image']['imgName'] ?>" style="max-width: 100%; max-height: 100%;">
+
+                        <div class="mt-5">
+                            <b>Description:</b>
+
+                            <p class="text-muted">
+                                <?= $data['image']['description'] ?>
+                            </p>
+                        </div>
+
+                        <div class="mt-5">
+                            <b>Tags:</b>
+                            <p class="text-muted"><?= $data['image']['group_concat(T.tag)'] ?></p>
+                        </div>
+
+                        <div class="mt-5">
+                            <b>Uploaded On:</b>
+                            <p class="text-muted"><?= $data['image']['datetime'] ?></p>
+                        </div>
                     </div>
-
-                    <div class="form-group">
-                        <label for="imageDescription">Edit tags:</label>
-                        <input type="text" class="form-control" id="imageTags" name="imageTags"
-                               placeholder="Venince,2020" value="<?= $data['image']['group_concat(T.tag)']?>">
-                    </div>
-
                     <?php
                 }
 
                 ?>
-                <button type="submit" class="btn btn-blue btn-block">Update!</button>
             </form>
         </div>
     </div>

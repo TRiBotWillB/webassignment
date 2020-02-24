@@ -99,6 +99,11 @@
                             <h5 class="card-title"><?= $img['imgName'] ?></h5>
                             <p class="card-text"><?= $img['description'] ?></p>
                             <p class="text-muted"><?=$img['group_concat(T.tag)']?></p>
+
+                            <form method="get" action="/home/viewImage">
+                                <input name="imgId" id="imgId" value="<?= $img['id'] ?>" hidden>
+                                <button type="submit" class="btn btn-primary mb-2">View</button>
+                            </form>
                         </div>
                     </div>
                 </div>

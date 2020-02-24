@@ -59,15 +59,17 @@ class home extends BaseController
         session_start();
         $data = array();
 
+        if(isset($_SESSION['username'])) {
+            $data["username"] = $_SESSION["username"];
+        }
 
         if (isset($_GET['imgId'])) {
-            $data["username"] = $_SESSION["username"];
-            $id = $_SESSION["id"];
+
             $data['image'] = $this->image->findImageById($_GET["imgId"]);
 
 
             // Render the page with the data
-            $this->view('users/edit', $data);
+            $this->view('users/view', $data);
 
 
         } else {

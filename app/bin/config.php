@@ -3,7 +3,7 @@
 $servername = "localhost";
 $database = "imger";
 $username = "root";
-$password = "root";
+$password = "";
 
 
 $conn = new mysqli($servername, $username, $password, $database);

@@ -44,14 +44,12 @@ class users extends BaseController
 
             // Update the image and pass any returned data into our Data array (merge the two arrays)
             $data = array_merge($data, $this->image->updateImage());
-
-
         }
 
         if (isset($_SESSION["username"]) && isset($_GET['imgId'])) {
             $data["username"] = $_SESSION["username"];
             $id = $_SESSION["id"];
-            $data['image'] = $this->image->findImageById($_GET["imgId"]);
+            $data['image'] = $this->image->findUserImageById($_GET["imgId"]);
 
 
             // Render the page with the data
