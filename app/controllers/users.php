@@ -21,9 +21,9 @@ class users extends BaseController
         session_start();
 
         $data = array();
-
         if(isset($_SESSION["username"])) {
             $data["username"] = $_SESSION["username"];
+            $id = $_SESSION["id"];
         }
 
         if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["imgId"])) {
@@ -37,11 +37,11 @@ class users extends BaseController
         } else {
 
             // No POST data means no need to filter images, let's send them all
-            $data['images'] = $this->search->findAllImages();
+            $data['images'] = $this->search->findUserImages($id);
         }
 
         // Render the page with the data
-        $this->view('home/images', $data);
+        $this->view('users/user_images', $data);
     }
 
     public function upload()
