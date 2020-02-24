@@ -23,13 +23,13 @@ class Image
         }
     }
 
-    public function search()
+    public function search($id = "")
     {
         $data = array();
 
         switch ($this->searchType) {
             case "description":
-                $data['images'] = $this->searchByDescription($this->searchText);
+                $data['images'] = $this->searchByDescription($this->searchText, $id);
                 break;
             case "tags":
                 $data['images'] = $this->searchByTag($this->searchText);
@@ -42,19 +42,28 @@ class Image
         return $data;
     }
 
-    public function searchByDescription($description)
+    public function searchByDescription($description, $id)
     {
         require '../app/bin/config.php';
 
         $rows = array();
 
-        $sql = "SELECT I.*, group_concat(T.tag) FROM images I INNER JOIN tags T ON I.id = T.imageId WHERE I.description LIKE ? GROUP BY I.id";
+        if($id == "") {
+            $sql = "SELECT I.*, group_concat(T.tag) FROM images I INNER JOIN tags T ON I.id = T.imageId WHERE I.description LIKE ? GROUP BY I.id";
+        } else {
+            $sql = "SELECT I.*, group_concat(T.tag) FROM images I INNER JOIN tags T ON I.id = T.imageId WHERE I.description LIKE ? AND I.userId = ? GROUP BY I.id";
+        }
+
         $searchDesc = '%' . $description . '%';
 
 
         if ($stmt = $conn->prepare($sql)) {
 
-            $stmt->bind_param("s", $searchDesc);
+            if($id == "") {
+                $stmt->bind_param("s", $searchDesc);
+            } else {
+                $stmt->bind_param("si", $searchDesc, $id);
+            }
             $stmt->execute();
 
             $result = $stmt->get_result();

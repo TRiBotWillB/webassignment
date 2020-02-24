@@ -73,19 +73,22 @@ class users extends BaseController
     {
         session_start();
 
-        print_r($_GET);
-
         $data = array();
         if (isset($_SESSION["username"])) {
             $data["username"] = $_SESSION["username"];
             $id = $_SESSION["id"];
         }
 
-        if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["imgId"]) && isset($id)) {
-            $imgId = $_POST["imgId"];
+        if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($id)) {
+            $this->image->searchText = isset($_POST["searchText"]) ? $_POST["searchText"] : "";
+
+            // Default Search type as Description if not set
+            $this->image->searchType = isset($_POST["searchType"]) ? $_POST["searchType"] : "Description";
+
+            $this->image->userId = $id;
 
             // Store the seach data and/or errors
-            $returnedData = $this->image->search();
+            $returnedData = $this->image->search($id);
 
             // Combine the new data with the old data array to be sent to the page
             $data = array_merge($data, $returnedData);

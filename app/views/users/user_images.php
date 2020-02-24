@@ -46,6 +46,7 @@
                 if (isset($data["username"])) {
                     ?>
                     <b><a href="/users/images"> <?= $data["username"] ?> </a></b>
+                    <b class="ml-3 active"><a href="/users/images"> My Images</a></b>
                     <b class="ml-3"><a href="/users/logout">Logout</a></b>
 
                     <?php
