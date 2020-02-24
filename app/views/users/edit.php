@@ -32,10 +32,10 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/">Home</a>
                 </li>
-                <li class="nav-item active">
+                <li class="nav-item ">
                     <a class="nav-link" href="/home/images">Image Search</a>
                 </li>
-                <li class="nav-item ">
+                <li class="nav-item active ">
                     <a class="nav-link" href="/users/upload">Upload</a>
                 </li>
             </ul>
@@ -63,50 +63,55 @@
     </nav>
 
     <div class="row justify-content-center">
-        <div class="col-12 text-center justify-content-center">
-            <h1 class="title-large mt-5"> Search for Images</h1>
+        <div class="col-12 col-md-8 mt-5">
 
-            <form class="form-inline text-center justify-content-center mt-5" method="post">
-                <label class="sr-only" for="searchText">Search Query</label>
-                <input type="text" class="form-control mb-2 mr-sm-2" id="searchText" name="searchText"
-                       placeholder="Description...">
+            <h1 class="text-center mb-2 title-large">Upload Your Images!</h1>
 
-                <label class="sr-only" for="searchType">Search Query</label>
-                <select class="custom-select my-1 mr-sm-2" id="searchType" name="searchType">
-                    <option value="description" selected>Description</option>
-                    <option value="tags">Tags</option>
-                    <option value="imgName">Image Name</option>
-                </select>
-
-                <button type="submit" class="btn btn-primary mb-2">Search</button>
-            </form>
-        </div>
-    </div>
-
-    <div class="row mt-5">
-        <?php
-        if (isset($data['images'])) {
-            foreach ($data['images'] as $img) {
-                ?>
-
-                <div class="col-4">
-                    <div class="card mt-3 mb-3" style="width: 18rem; min-width: 18rem;">
-                        <img class="card-img-top"
-                             src="/public/uploads/<?= $img['id'] ?>/<?= $img['imgName'] ?>"
-                             alt="<?= $img['imgName'] ?>">
-                        <div class="card-body">
-                            <h5 class="card-title"><?= $img['imgName'] ?></h5>
-                            <p class="card-text"><?= $img['description'] ?></p>
-                            <p class="text-muted"><?=$img['group_concat(T.tag)']?></p>
-                        </div>
-                    </div>
-                </div>
+            <form class="register-form mt-5" method="POST" enctype="multipart/form-data">
+                <h4 class="form-title title-medium text-center">Upload Image</h4>
 
                 <?php
-            }
-        }
-        ?>
+                if (isset($data['errors'])) {
+                    foreach ($data['errors'] as $error) {
+                        ?>
 
+                        <div class="alert alert-danger alert-dismissable">
+                            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                            <?= $error ?>
+                        </div>
+
+                        <?php
+                    }
+                }
+
+                if(isset($data['image'])) {
+                    ?>
+
+                    <div class="alert alert-success alert-dismissable">
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                        <?= print_r($data['image'])?>
+                    </div>
+
+                    <?php
+                }
+
+                ?>
+
+
+                <div class="form-group">
+                    <label for="imageDescription">Edit Description:</label>
+                    <textarea class="form-control" id="imageDescription" name="imageDescription" rows="3"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="imageDescription">Edit tags:</label>
+                    <input type="text" class="form-control" id="imageTags" name="imageTags" placeholder="Venince,2020">
+                </div>
+
+
+                <button type="submit" class="btn btn-blue btn-block">Upload!</button>
+            </form>
+        </div>
     </div>
 </div>
 

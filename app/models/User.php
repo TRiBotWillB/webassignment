@@ -186,7 +186,7 @@ class User
                 $target = $_SERVER['DOCUMENT_ROOT'] . '/public/uploads/' . $id . '/';
 
                 if (!is_dir($target)) {
-                    mkdir($target, true);
+                    mkdir($target, 0777, true);
                 }
 
                 $target .= '/' . basename($image);

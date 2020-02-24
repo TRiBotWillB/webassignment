@@ -45,7 +45,7 @@
 
                 if (isset($data["username"])) {
                     ?>
-                    <b> <?= $data["username"] ?> </b>
+                    <b><a href="/users/images"> <?= $data["username"] ?> </a></b>
                     <b class="ml-3"><a href="/users/logout">Logout</a></b>
 
                     <?php
@@ -53,6 +53,7 @@
                     ?>
 
                     <a href="/users/login">Login</a>
+                    <a href="/users/register">Register</a>
                     <?php
                 }
                 ?>

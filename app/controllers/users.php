@@ -4,12 +4,12 @@
 class users extends BaseController
 {
     protected $user;
-    protected $search;
+    protected $image;
 
     public function __construct()
     {
         $this->user = $this->model('User');
-        $this->search = $this->model('Search');
+        $this->image = $this->model('Image');
     }
 
     public function index()
@@ -17,27 +17,74 @@ class users extends BaseController
 
     }
 
-    public function images() {
+    public function deleteImage()
+    {
         session_start();
 
+        if (isset($_SESSION["username"])) {
+            $data["username"] = $_SESSION["username"];
+        }
+
+
+        if (isset($_GET["imgId"])) {
+            $this->image->delete($_GET["imgId"]);
+        }
+
+        header("Location: images");
+
+        exit();
+    }
+
+    public function editImage()
+    {
+        session_start();
         $data = array();
-        if(isset($_SESSION["username"])) {
+
+        if (isset($_SESSION["username"]) && isset($_GET['imgId'])) {
+            $data["username"] = $_SESSION["username"];
+            $id = $_SESSION["id"];
+            $data['image'] = $this->image->findImageById($_GET["imgId"]);
+
+
+            // Render the page with the data
+            $this->view('users/edit', $data);
+
+
+        } else {
+
+            // No ID set, send back to images
+            header("Location: images");
+
+            exit();
+        }
+
+
+    }
+
+    public function images()
+    {
+        session_start();
+
+        print_r($_GET);
+
+        $data = array();
+        if (isset($_SESSION["username"])) {
             $data["username"] = $_SESSION["username"];
             $id = $_SESSION["id"];
         }
 
-        if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["imgId"])) {
+        if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["imgId"]) && isset($id)) {
             $imgId = $_POST["imgId"];
 
             // Store the seach data and/or errors
-            $returnedData = $this->search->search();
+            $returnedData = $this->image->search();
 
             // Combine the new data with the old data array to be sent to the page
             $data = array_merge($data, $returnedData);
         } else {
 
             // No POST data means no need to filter images, let's send them all
-            $data['images'] = $this->search->findUserImages(1);
+            $data['images'] = $this->image->findUserImages($id);
         }
 
         // Render the page with the data

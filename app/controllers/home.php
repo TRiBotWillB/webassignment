@@ -3,11 +3,11 @@
 class home extends BaseController
 {
 
-    protected $search;
+    protected $image;
 
     public function __construct()
     {
-        $this->search = $this->model('Search');
+        $this->image = $this->model('Image');
     }
 
     public function index()
@@ -34,20 +34,20 @@ class home extends BaseController
         }
 
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            $this->search->description = isset($_POST["searchText"]) ? $_POST["searchText"] : "";
+            $this->image->description = isset($_POST["searchText"]) ? $_POST["searchText"] : "";
 
             // Default Search type as Description if not set
-            $this->search->description = isset($_POST["searchType"]) ? $_POST["searchType"] : "Description";
+            $this->image->description = isset($_POST["searchType"]) ? $_POST["searchType"] : "Description";
 
             // Store the seach data and/or errors
-            $returnedData = $this->search->search();
+            $returnedData = $this->image->search();
 
             // Combine the new data with the old data array to be sent to the page
             $data = array_merge($data, $returnedData);
         } else {
 
             // No POST data means no need to filter images, let's send them all
-            $data['images'] = $this->search->findAllImages();
+            $data['images'] = $this->image->findAllImages();
         }
 
         // Render the page with the data

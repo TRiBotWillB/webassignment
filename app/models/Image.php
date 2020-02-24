@@ -1,11 +1,27 @@
 <?php
 
 
-class Search
+class Image
 {
 
     public $searchText;
     public $searchType;
+
+    public function delete($imgId)
+    {
+        require '../app/bin/config.php';
+
+        if(isset($_SESSION["id"])) {
+            $userId = $_SESSION["id"];
+
+            $sql = "DELETE FROM images where id = ? and userId = ?";
+
+            if($stmt = $conn->prepare($sql)) {
+                $stmt->bind_param("ii", $imgId, $userId);
+                $stmt->execute();
+            }
+        }
+    }
 
     public function searchImages()
     {
@@ -66,7 +82,7 @@ class Search
 
         if ($stmt = $conn->prepare($sql)) {
 
-            $stmt->bind_param("i", 1);
+            $stmt->bind_param("i", $userId);
             $stmt->execute();
 
             $result = $stmt->get_result();
@@ -81,6 +97,32 @@ class Search
 
 
         return $rows;
+    }
+
+    public function findImageById($imgId) {
+        require '../app/bin/config.php';
+
+        $imageData = "";
+
+        if(isset($_SESSION["id"])) {
+
+            $userId = $_SESSION["id"];
+
+            $sql = "SELECT I.*, group_concat(T.tag) FROM images I INNER JOIN tags T ON I.id = T.imageId WHERE I.id = ? AND I.userId = ? GROUP BY I.id";
+
+            if($stmt = $conn->prepare($sql)) {
+
+                $stmt->bind_param("ii", $imgId, $userId);
+                $stmt->execute();
+
+                $result = $stmt->get_result();
+
+                $imageData = $result->fetch_assoc();
+
+            }
+        }
+
+        return $imageData;
     }
 
 }

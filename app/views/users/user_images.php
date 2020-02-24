@@ -45,7 +45,7 @@
 
                 if (isset($data["username"])) {
                     ?>
-                    <b> <?= $data["username"] ?> </b>
+                    <b><a href="/users/images"> <?= $data["username"] ?> </a></b>
                     <b class="ml-3"><a href="/users/logout">Logout</a></b>
 
                     <?php
@@ -53,6 +53,7 @@
                     ?>
 
                     <a href="/users/login">Login</a>
+                    <a href="/users/register">Register</a>
                     <?php
                 }
                 ?>
@@ -98,12 +99,12 @@
                             <p class="card-text"><?= $img['description'] ?></p>
                             <p class="text-muted"><?=$img['group_concat(T.tag)']?></p>
 
-                            <form method="post" action="/users/edit">
+                            <form method="get" action="/users/editImage">
                                 <input name="imgId" id="imgId" value="<?= $img['id'] ?>" hidden>
                                 <button type="submit" class="btn btn-primary mb-2">Edit</button>
                             </form>
 
-                            <form method="post" action="/users/Delete">
+                            <form method="get" action="/users/deleteImage">
                                 <input name="imgId" id="imgId" value="<?= $img['id'] ?>" hidden>
                                 <button type="submit" class="btn btn-primary mb-2">Delete</button>
                             </form>
