@@ -44,6 +44,10 @@ class home extends BaseController
 
             // Combine the new data with the old data array to be sent to the page
             $data = array_merge($data, $returnedData);
+        } else {
+
+            // No POST data means no need to filter images, let's send them all
+            $data['images'] = $this->search->findAllImages();
         }
 
         // Render the page with the data

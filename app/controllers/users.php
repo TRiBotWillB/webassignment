@@ -4,15 +4,44 @@
 class users extends BaseController
 {
     protected $user;
+    protected $search;
 
     public function __construct()
     {
         $this->user = $this->model('User');
+        $this->search = $this->model('Search');
     }
 
     public function index()
     {
 
+    }
+
+    public function images() {
+        session_start();
+
+        $data = array();
+
+        if(isset($_SESSION["username"])) {
+            $data["username"] = $_SESSION["username"];
+        }
+
+        if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["imgId"])) {
+            $imgId = $_POST["imgId"];
+
+            // Store the seach data and/or errors
+            $returnedData = $this->search->search();
+
+            // Combine the new data with the old data array to be sent to the page
+            $data = array_merge($data, $returnedData);
+        } else {
+
+            // No POST data means no need to filter images, let's send them all
+            $data['images'] = $this->search->findAllImages();
+        }
+
+        // Render the page with the data
+        $this->view('home/images', $data);
     }
 
     public function upload()

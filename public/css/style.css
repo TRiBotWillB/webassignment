@@ -25,6 +25,13 @@ html, body {
     font-size: 1.5em;
 }
 
+.card {
+    border: 1px solid #00adb5 !important;
+}
+
+.card-body {
+    background-color: #1d1f27 !important;
+}
 
 input, textarea {
     border-radius: 0px !important;

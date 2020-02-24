@@ -32,7 +32,7 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/">Home</a>
                 </li>
-                <li class="nav-item active">
+                <li class="nav-item">
                     <a class="nav-link" href="/home/images">Image Search</a>
                 </li>
                 <li class="nav-item ">
@@ -63,7 +63,7 @@
 
     <div class="row justify-content-center">
         <div class="col-12 text-center justify-content-center">
-            <h1 class="title-large mt-5"> Search for Images</h1>
+            <h1 class="title-large mt-5"> Your Images:</h1>
 
             <form class="form-inline text-center justify-content-center mt-5" method="post">
                 <label class="sr-only" for="searchText">Search Query</label>
@@ -97,6 +97,16 @@
                             <h5 class="card-title"><?= $img['imgName'] ?></h5>
                             <p class="card-text"><?= $img['description'] ?></p>
                             <p class="text-muted"><?=$img['group_concat(T.tag)']?></p>
+
+                            <form method="post" action="/users/edit">
+                                <input name="imgId" id="imgId" value="<?= $img['id'] ?>" hidden>
+                                <button type="submit" class="btn btn-primary mb-2">Edit</button>
+                            </form>
+
+                            <form method="post" action="/users/Delete">
+                                <input name="imgId" id="imgId" value="<?= $img['id'] ?>" hidden>
+                                <button type="submit" class="btn btn-primary mb-2">Delete</button>
+                            </form>
                         </div>
                     </div>
                 </div>
