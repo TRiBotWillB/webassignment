@@ -59,8 +59,28 @@ class Search
     public function findUserImages($userId) {
         require '../app/bin/config.php';
 
-        $sql = "SELECT I.*, group_concat(T.tag) FROM images I INNER JOIN tags T ON I.id = T.imageId GROUP BY I.id";
+        $sql = "SELECT I.*, group_concat(T.tag) FROM images I INNER JOIN tags T ON I.id = T.imageId WHERE I.userId = ? GROUP BY I.id";
 
+        $rows = array();
+
+
+        if ($stmt = $conn->prepare($sql)) {
+
+            $stmt->bind_param("i", 1);
+            $stmt->execute();
+
+            $result = $stmt->get_result();
+
+            while($row = $result->fetch_assoc())
+            {
+
+                $rows[] = $row;
+            }
+
+        }
+
+
+        return $rows;
     }
 
 }

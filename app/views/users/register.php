@@ -65,6 +65,9 @@
                 </div>
 
                 <button type="submit" class="btn btn-blue btn-block">Register</button>
+                <small>Already have an account? Click
+                    <a href="/users/login">here</a>
+                    to login</small>
             </form>
         </div>
     </div>

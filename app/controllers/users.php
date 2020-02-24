@@ -37,7 +37,7 @@ class users extends BaseController
         } else {
 
             // No POST data means no need to filter images, let's send them all
-            $data['images'] = $this->search->findUserImages($id);
+            $data['images'] = $this->search->findUserImages(1);
         }
 
         // Render the page with the data

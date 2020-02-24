@@ -54,6 +54,9 @@
                 </div>
 
                 <button type="submit" class="btn btn-blue btn-block">Login</button>
+                <small>Don't have an account? Click
+                    <a href="/users/register">here</a>
+                    to register</small>
             </form>
         </div>
     </div>
