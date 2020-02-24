@@ -40,6 +40,14 @@ class users extends BaseController
         session_start();
         $data = array();
 
+        if($_SERVER["REQUEST_METHOD"] == "POST") {
+
+            // Update the image and pass any returned data into our Data array (merge the two arrays)
+            $data = array_merge($data, $this->image->updateImage());
+
+
+        }
+
         if (isset($_SESSION["username"]) && isset($_GET['imgId'])) {
             $data["username"] = $_SESSION["username"];
             $id = $_SESSION["id"];
@@ -107,7 +115,7 @@ class users extends BaseController
             if (isset($_SESSION["username"])) {
 
                 // Attempt to upload the image, POST data will be taken within the user model
-                $errors = $this->user->upload();
+                $errors = $this->image->upload();
 
                 if (sizeof($errors) > 0) {
                     // Since there are errors, render the page showing those errors

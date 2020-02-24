@@ -65,12 +65,24 @@
     <div class="row justify-content-center">
         <div class="col-12 col-md-8 mt-5">
 
-            <h1 class="text-center mb-2 title-large">Upload Your Images!</h1>
+            <h1 class="text-center mb-2 title-large">Edit Your Image!</h1>
 
             <form class="register-form mt-5" method="POST" enctype="multipart/form-data">
-                <h4 class="form-title title-medium text-center">Upload Image</h4>
+                <h4 class="form-title title-medium text-center">Edit Image</h4>
 
                 <?php
+
+                if(isset($data['updated'])) {
+                    ?>
+
+                    <div class="alert alert-success alert-dismissable">
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                        updated!
+                    </div>
+
+                    <?php
+                }
+
                 if (isset($data['errors'])) {
                     foreach ($data['errors'] as $error) {
                         ?>
@@ -84,32 +96,30 @@
                     }
                 }
 
-                if(isset($data['image'])) {
+                if (isset($data['image'])) {
                     ?>
 
-                    <div class="alert alert-success alert-dismissable">
-                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                        <?= print_r($data['image'])?>
+                    <h1 class="title-small mb-3"><?= $data['image']['imgName']?></h1>
+
+                    <input name="imgId" value="<?= $data['image']['id']?>" hidden>
+
+                    <div class="form-group">
+                        <label for="imageDescription">Edit Description:</label>
+                        <textarea class="form-control" id="imageDescription" name="imageDescription"
+                                  rows="3"><?= $data['image']['description']?></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="imageDescription">Edit tags:</label>
+                        <input type="text" class="form-control" id="imageTags" name="imageTags"
+                               placeholder="Venince,2020" value="<?= $data['image']['group_concat(T.tag)']?>">
                     </div>
 
                     <?php
                 }
 
                 ?>
-
-
-                <div class="form-group">
-                    <label for="imageDescription">Edit Description:</label>
-                    <textarea class="form-control" id="imageDescription" name="imageDescription" rows="3"></textarea>
-                </div>
-
-                <div class="form-group">
-                    <label for="imageDescription">Edit tags:</label>
-                    <input type="text" class="form-control" id="imageTags" name="imageTags" placeholder="Venince,2020">
-                </div>
-
-
-                <button type="submit" class="btn btn-blue btn-block">Upload!</button>
+                <button type="submit" class="btn btn-blue btn-block">Update!</button>
             </form>
         </div>
     </div>

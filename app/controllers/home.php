@@ -34,10 +34,10 @@ class home extends BaseController
         }
 
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            $this->image->description = isset($_POST["searchText"]) ? $_POST["searchText"] : "";
+            $this->image->searchText = isset($_POST["searchText"]) ? $_POST["searchText"] : "";
 
             // Default Search type as Description if not set
-            $this->image->description = isset($_POST["searchType"]) ? $_POST["searchType"] : "Description";
+            $this->image->searchType = isset($_POST["searchType"]) ? $_POST["searchType"] : "Description";
 
             // Store the seach data and/or errors
             $returnedData = $this->image->search();
