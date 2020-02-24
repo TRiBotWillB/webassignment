@@ -55,4 +55,28 @@ class home extends BaseController
 
     }
 
+    public function viewImage() {
+        session_start();
+        $data = array();
+
+
+        if (isset($_GET['imgId'])) {
+            $data["username"] = $_SESSION["username"];
+            $id = $_SESSION["id"];
+            $data['image'] = $this->image->findImageById($_GET["imgId"]);
+
+
+            // Render the page with the data
+            $this->view('users/edit', $data);
+
+
+        } else {
+
+            // No ID set, send back to images
+            header("Location: images");
+
+            exit();
+        }
+    }
+
 }
